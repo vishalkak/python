@@ -1,6 +1,7 @@
 import yaml
 import pyodbc
 
+
 def get_sql_connection_from_config(config_file_path):
     # Load configuration from the YAML file
     with open(config_file_path, "r") as ymlfile:
@@ -23,6 +24,7 @@ def get_sql_connection_from_config(config_file_path):
         print(f"Error connecting to SQL Server. SQL State: {sqlstate}")
         return None
 
+
 def execute_sql_statement(connection, sql_statement):
     try:
         if connection:
@@ -39,8 +41,14 @@ def execute_sql_statement(connection, sql_statement):
             connection.close()
             print("SQL Server connection is closed")
 
-# Call the function with the path to your YAML configuration file
-connection = get_sql_connection_from_config("config.yml")
-if connection:
-    # Execute SQL statement
-    execute_sql_statement(connection, "SELECT @@version as version")
+
+# Press the green button in the gutter to run the script.
+if __name__ == '__main__':
+    config_file_path = "config.yaml"
+    sql_statement = "SELECT @@version as version"
+
+    connection = get_sql_connection_from_config(config_file_path)
+
+    # Execute SQL statement using the connection
+    if connection:
+        execute_sql_statement(connection, sql_statement)
