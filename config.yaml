@@ -4,3 +4,17 @@ database:
   username: username
   password: password
   driver: ODBC Driver 17 for SQL Server
+
+
+
+Super advanced python: A great talk on how intermediate / advanced Python techniques...
+https://www.youtube.com/watch?v=u2KZJzoz-qI
+
+The GIL: The Global Interpreter lock explained... You DON'T need to be an expert in these, just to be aware of it, and what it does / what its limitation are.
+https://realpython.com/python-gil/
+
+Decorators in Python: A good recourse on decorators...
+https://www.datacamp.com/community/tutorials/decorators-python
+
+The collection library: Get good at this - comes up a lot in interviews!
+https://docs.python.org/3/library/collections.html
