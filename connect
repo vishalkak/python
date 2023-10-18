@@ -1,0 +1,46 @@
+import yaml
+import pyodbc
+
+def get_sql_connection_from_config(config_file_path):
+    # Load configuration from the YAML file
+    with open(config_file_path, "r") as ymlfile:
+        config = yaml.safe_load(ymlfile)
+
+    # Extract database configuration
+    db_config = config["database"]
+
+    # Construct the connection string
+    conn_str = f"DRIVER={{{db_config['driver']}}};SERVER={db_config['server']};DATABASE={db_config['database']};UID={db_config['username']};PWD={db_config['password']}"
+
+    # Establish a connection to the database
+    try:
+        connection = pyodbc.connect(conn_str)
+        if connection:
+            print("Connected to the SQL Server database.")
+            return connection
+    except pyodbc.Error as ex:
+        sqlstate = ex.args[1]
+        print(f"Error connecting to SQL Server. SQL State: {sqlstate}")
+        return None
+
+def execute_sql_statement(connection, sql_statement):
+    try:
+        if connection:
+            cursor = connection.cursor()
+            cursor.execute(sql_statement)
+            rows = cursor.fetchall()
+            for row in rows:
+                print(row)
+    except pyodbc.Error as ex:
+        sqlstate = ex.args[1]
+        print(f"Error executing SQL statement. SQL State: {sqlstate}")
+    finally:
+        if 'connection' in locals():
+            connection.close()
+            print("SQL Server connection is closed")
+
+# Call the function with the path to your YAML configuration file
+connection = get_sql_connection_from_config("config.yml")
+if connection:
+    # Execute SQL statement
+    execute_sql_statement(connection, "SELECT @@version as version")
