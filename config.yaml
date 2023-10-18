@@ -1,0 +1,6 @@
+database:
+  server: server_name
+  database: database_name
+  username: username
+  password: password
+  driver: ODBC Driver 17 for SQL Server
